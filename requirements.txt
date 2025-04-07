@@ -1,0 +1,7 @@
+dotenv
+mistralai
+pytest
+langchain
+langchain_core
+langchain_mistralai
+langgraph

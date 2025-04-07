@@ -5,3 +5,5 @@ langchain
 langchain_core
 langchain_mistralai
 langgraph
+langchain_community
+requests

@@ -1,21 +1,34 @@
 
---> LLM
-'Initialisation du LLM': mistral par défaut 
-- init_llm.py : Afin d'initialiser un LLM
-- exemple_utilisation.py : exemple d'utilisation du LLM
-- tests_init_llm_and_env_variable.py : tests unitaires 
-- env_variable_loader.py : permet de charger les variables d'environnement: cela permet de centraliser la récupération de variables d'environnement
-  
---> Conversation 
-'Appel du LLM pour la mise en place d'une conversation utilisateur/LLM avec mémoire de conversation'
-- conversation.py : mise en place de la conversation 
-  - > implémente une conversation via un affichage asynchrone et en streaming de la réponse llm 
-- tests_conversation.py : tests unitaires
+# Hermine Chatbot Agent
 
-Pour lancer la conversation : 'python -m Conversation.conversation'
+## LLM
+### Initialisation du LLM
+- **Par défaut** : `mistral`
+- **Scripts** :
+    - `init_llm.py` : Initialisation d'un LLM.
+    - `exemple_utilisation.py` : Exemple d'utilisation du LLM.
+    - `env_variable_loader.py` : Chargement des variables d'environnement pour centraliser leur récupération.
 
--> Réflechir au pattern Factory : utile pour des changement rapides de technologies
--> Réflechir aux méthodes de prompt caching : Redis: pro & cons avec un SequenceMatcher
+## Conversation
+### Mise en place d'une conversation utilisateur/LLM avec mémoire
+- **Script** :
+    - `conversation.py` : Implémente une conversation avec affichage asynchrone et streaming de la réponse LLM.
 
-### Il faut faire attention car la mémoire sur langchain est dépréciée dans les nouvelles versions
-### Il faut utiliser les mémoires Langgraph :https://python.langchain.com/docs/versions/migrating_memory/
+## Tests
+- **Conversation** :
+    - `Conversation/tests_conversation.py` : Tests unitaires pour la partie conversation.
+- **LLM** :
+    - `LLM/tests_init_llm_and_env_variable.py` : Tests unitaires pour l'initialisation du LLM choisi.
+
+## Lancer la conversation
+```bash
+python -m Conversation.conversation
+```
+
+## Points de réflexion
+- **Pattern Factory** : Utile pour des changements rapides de technologies.
+- **Prompt Caching** : Étudier les avantages et inconvénients de Redis avec un `SequenceMatcher`.
+
+## Notes importantes
+- La mémoire sur LangChain est dépréciée dans les nouvelles versions.
+- Utiliser les mémoires LangGraph : [Documentation LangChain](https://python.langchain.com/docs/versions/migrating_memory/)

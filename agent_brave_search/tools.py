@@ -1,6 +1,7 @@
 'Fichier de définition des outils pour la recherche sur Brave'
 
 from langchain.tools import BaseTool
+from langchain_community.tools import BraveSearch
 
 def recherche_brave(BaseTool):
     description = ""

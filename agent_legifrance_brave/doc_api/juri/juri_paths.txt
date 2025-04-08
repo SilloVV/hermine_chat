@@ -1,0 +1,8 @@
+Path: /consult/getJuriPlanClassement
+Description: Récupère les plans de classement (nomenclature) des documents du fonds JURI à partir de son identifiant
+
+Path: /consult/juri
+Description: Récupère le contenu d'un texte du fonds JURI à partir de son identifiant
+
+Path: /consult/getJuriWithAncienId
+Description: Récupère un texte du fond juri en fonction de son Ancien ID

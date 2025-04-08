@@ -1,0 +1,32 @@
+"ALL" # tous les champs
+"TITLE" # titre du texte
+"TABLE" # table des matières
+"NOR" # numéro d'ordre de la République
+"NUM" # numéro de la décision
+"ADVANCED_TEXTE_ID" # identifiant du texte avancé
+"NUM_DELIB" # numéro de la délibération
+"NUM_DEC" # numéro de la décision
+"NUM_ARTICLE" # numéro de l'article
+"ARTICLE" # article
+"MINISTERE" # ministère
+"VISA" # visa
+"NOTICE" # notice
+"VISA_NOTICE" # visa et notice
+"TRAVAUX_PREP" # travaux préparatoires
+"SIGNATURE" # date de signature
+"NOTA" # note
+"NUM_AFFAIRE" # numéro d'affaire
+"ABSTRATS" # résumés
+"RESUMES" # résumés
+"TEXTE" # texte intégral
+"ECLI" # identifiant ECLI
+"NUM_LOI_DEF" # numéro de la loi définie
+"TYPE_DECISION" # type de décision
+"NUMERO_INTERNE" # numéro interne
+"REF_PUBLI" # référence de publication
+"RESUME_CIRC" # résumé de la circulaire
+"TEXTE_REF" # texte de référence
+"TITRE_LOI_DEF" # titre de la loi définie
+"RAISON_SOCIALE" # raison sociale
+"MOTS_CLES" # mots-clés
+"IDCC" # identifiant de la convention collective

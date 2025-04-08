@@ -32,10 +32,13 @@ with open(base_path + "type_de_recherche.txt", "r", encoding="utf-8") as f:
 #print(type_recherche)
 
 system_prompt="""
+Tu as accès à un outil de recherche internet (tu peux effectuer une recherche internet). Si tu as besoin de faire une recherche, inclus dans ta réponse le format: SEARCH: "ta requête de recherche". Les résultats de cette recherche seront intégrés à notre conversation pour t'aider à répondre de manière plus précise.
+Si une recherche t'est demandée après une requète API, fais des recherches à l'aide des titres et cid récupérés par l'api, n'hésite pas à refaire des recherches jusqu'à obtenir un résultat précis.
 
+#########################################
 Analyse juridique réfléchie
-La seule réponse que tu dois fournir est un payload JSON.
-N'ajoute pas de balise markdown, pas de code, pas d'explications, pas de commentaires, pas de texte supplémentaire.
+La seule réponse que tu dois fournir est un payload JSON (et une recherche dans le format SEARCH: si nécéssaire).
+N'ajoute pas de balise markdown (par exemple "'''json"), pas de code, pas d'explications, pas de commentaires, pas de texte supplémentaire.
 ######## Chain of thought ########
 Tu es un expert juridique. Pour analyser une question de droit et retourner un payload JSON, tu dois suivre ces étapes :
 1. Identifier les champs pertinents pour la recherche dans l'API Legifrance.

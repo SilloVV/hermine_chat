@@ -1,4 +1,5 @@
 import time 
+import re 
 
 def display_context(messages):
     """
@@ -27,7 +28,7 @@ def keep_window_buffer(messages, memory_window):
     return messages
 
         
-def demander_entree_utilisateur():
+def ask_user_input():
     """
     Demande une entrée utilisateur
     """
@@ -56,7 +57,7 @@ def display_streaming_response(llm, messages):
     for text_chunk in stream_chat_response(llm, messages):
         print(text_chunk, end="", flush=True)
         full_response += text_chunk
-        time.sleep(0.08)  # Optionnel: simule un délai de frappe naturel
+        time.sleep(0.02)  # Optionnel: simule un délai de frappe naturel
     
     print("\n")
     return full_response 
@@ -83,18 +84,51 @@ def parse_json_model_output(json_string:str)->str:
 
 def detect_search_request(response):
     """
-    Détecte si la réponse du LLM contient une demande de recherche internet
-    et extrait la requête de recherche si c'est le cas.
+    Détecte toutes les demandes de recherche internet dans la réponse du LLM
+    et extrait les requêtes de recherche.
     
     Args:
         response (str): Réponse complète du LLM
         
     Returns:
-        None si pas de recherche, sinon la requête de recherche (str)
+        list: Liste des requêtes de recherche trouvées (vide si aucune)
     """
-    search_pattern = r'\{SEARCH:\s*"([^"]*)"\}'
-    match = re.search(search_pattern, response)
+    import re
+    search_pattern = r'SEARCH:\s*"?([^"\n]*)"?'
+    # Trouve toutes les occurrences du pattern dans le texte
+    matches = re.findall(search_pattern, response)
     
-    if match:
-        return match.group(1)
-    return None
+    # Nettoie les requêtes trouvées (enlève les espaces superflus)
+    queries = [match.strip() for match in matches if match.strip()]
+    
+    return queries
+
+def format_response(search_results):
+    """
+    Formate les résultats de recherche de BraveSearch en un texte lisible.
+    
+    Args:
+        search_results (list): Liste de dictionnaires contenant les résultats de recherche
+        
+    Returns:
+        str: Texte formaté contenant les résultats de recherche
+    """
+    formatted_text = ""
+    
+    # Vérifier si search_results est une liste
+    if isinstance(search_results, list):
+        # Parcourir chaque résultat de recherche
+        for i, result in enumerate(search_results, 1):
+            title = result.get('title', 'Titre non disponible')
+            link = result.get('link', 'Lien non disponible')
+            snippet = result.get('snippet', 'Description non disponible')
+            
+            # Ajouter le résultat formaté au texte
+            formatted_text += f"{i}. **{title}**\n"
+            formatted_text += f"   URL: {link}\n"
+            formatted_text += f"   Description: {snippet}\n\n"
+    else:
+        # Si ce n'est pas une liste, essayer de traiter comme un autre format
+        formatted_text = "Format de résultat non reconnu: " + str(search_results)
+    
+    return formatted_text

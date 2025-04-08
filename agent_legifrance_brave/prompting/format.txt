@@ -1,0 +1,21 @@
+  payload = {
+        "recherche": {
+            "champs": [
+                {
+                    "typeChamp": {type de champ},
+                    "criteres": [
+                        {
+                            "typeRecherche": {type de recherche},
+                            "valeur": {selon la query utilisateur},
+                            "operateur": {opérateur}
+                        }
+                    ],
+                    "operateur": {opérateur}
+                }
+            ],
+            "pageNumber": 1,
+            "pageSize": 15,
+            "sort": "PERTINENCE"
+        },
+        "fond": {fond juridique}
+    }

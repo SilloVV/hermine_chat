@@ -5,6 +5,7 @@ from agent_payload_legifrance.tools.appel_api import api_call
 import json
 
 
+
 # Pour charger les variables d'environnement
 MODEL_NAME=load_var_env("MODEL_NAME")
 MEMORY_WINDOW = 5 # nombre de messages à garder dans la mémoire de la conversation

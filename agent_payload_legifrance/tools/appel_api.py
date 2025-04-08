@@ -1,6 +1,7 @@
 import requests
 import os
 from dotenv import load_dotenv
+from typing import Dict
 
 # Chargement des variables d'environnement
 load_dotenv()
@@ -59,18 +60,35 @@ def api_call(Payload: dict):
     # Requête simple pour rechercher le Code civil
     payload = Payload
     
+    # test ping pong
+    pong = requests.get(f"{LEGIFRANCE_BASE_URL}/search/ping", headers=headers)
+
+    if pong.status_code == 500:
+        print("L'API Legifrance est en ligne !")
+    else:
+        raise Exception("L'API Legifrance ne répond pas.")
+    
     response = requests.post(f"{LEGIFRANCE_BASE_URL}/search", headers=headers, json=payload)
     
     if response.status_code == 200:
-        resultat = response.json()
+        resultats = response.json()
+        titres = []
+        for resultat in resultats.get('results', []):
+            print(resultat)
+            for titre in resultat.get('titles', []):
+                print("-> " + titre.get('title', 'Titre non disponible'))
+                titres.append(titre.get('title', 'Titre non disponible'))
         print("Requête réussie !")
-        return resultat
+        return titres
     else:
         print(f"Erreur lors de la requête: {response.status_code} - {response.text}")
         return f"Échec de la requête à Legifrance: code {response.status_code}"
-    
+
+
+## utilisation de l'outil
 print("Test de l'API Legifrance")
 print("====================================")
+
 print(api_call({
     "recherche": {
         "champs": [
@@ -80,15 +98,15 @@ print(api_call({
                     {
                         "typeRecherche": "TOUS_LES_MOTS_DANS_UN_CHAMP",
                         "valeur": "Paris",
-                        "operateur": "ET"
+                        "operateur": "OU"
                     },
                     {
                         "typeRecherche": "TOUS_LES_MOTS_DANS_UN_CHAMP",
-                        "valeur": "droit d'accès",
+                        "valeur": "accès",
                         "operateur": "ET"
                     }
                 ],
-                "operateur": "ET"
+                "operateur": "OU"
             }
         ],
         "pageNumber": 1,

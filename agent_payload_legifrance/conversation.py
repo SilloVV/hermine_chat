@@ -1,6 +1,7 @@
 from LLM.init_llm import initialize_llm
 from LLM.env_variable_loader import load_var_env
-from agent_legifrance.utils_conversation import parse_json_model_output
+from agent_payload_legifrance.utils_conversation import parse_json_model_output
+from agent_payload_legifrance.tools import appel_api
 
 # Pour charger les variables d'environnement
 MODEL_NAME=load_var_env("MODEL_NAME")
@@ -15,6 +16,7 @@ from .utils_conversation import (
     display_context,
     count_interactions,
 )
+
 
 def main():
     """

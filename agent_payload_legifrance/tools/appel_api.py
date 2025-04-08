@@ -48,7 +48,7 @@ def api_call(Payload: dict):
     if not token:
         return "Échec de connexion à Legifrance (échec d'obtention du token)"
     
-    print(f"Token obtenu avec succès: {token[:15]}...")
+    #print(f"INFO : Token obtenu avec succès !")
     
     # Test de requête simple - recherche de texte
     headers = {
@@ -64,54 +64,61 @@ def api_call(Payload: dict):
     pong = requests.get(f"{LEGIFRANCE_BASE_URL}/search/ping", headers=headers)
 
     if pong.status_code == 500:
-        print("L'API Legifrance est en ligne !")
+        print("INFO: L'API Legifrance est en ligne !")
     else:
-        raise Exception("L'API Legifrance ne répond pas.")
+        raise Exception("ERREUR: L'API Legifrance ne répond pas.")
     
     response = requests.post(f"{LEGIFRANCE_BASE_URL}/search", headers=headers, json=payload)
     
     if response.status_code == 200:
         resultats = response.json()
         titres = []
+        cids = []
+        if resultats.get('results') is None:
+            print("INFO: Aucun résultat trouvé.")
+            return []
         for resultat in resultats.get('results', []):
-            print(resultat)
+            #print("INFO : résultats trouvés !")
             for titre in resultat.get('titles', []):
-                print("-> " + titre.get('title', 'Titre non disponible'))
+                print("INFO: -> " + titre.get('title', 'Titre non disponible') + "-> " + titre.get('cid', 'CID non disponible'))
                 titres.append(titre.get('title', 'Titre non disponible'))
-        print("Requête réussie !")
-        return titres
+                cids.append(titre.get('cid', 'CID non disponible'))
+        print("INFO: Requête réussie !")
+        return titres, cids
     else:
         print(f"Erreur lors de la requête: {response.status_code} - {response.text}")
         return f"Échec de la requête à Legifrance: code {response.status_code}"
 
 
 ## utilisation de l'outil
-print("Test de l'API Legifrance")
-print("====================================")
+if __name__ == "__main__":
 
-print(api_call({
-    "recherche": {
-        "champs": [
-            {
-                "typeChamp": "TITLE",
-                "criteres": [
-                    {
-                        "typeRecherche": "TOUS_LES_MOTS_DANS_UN_CHAMP",
-                        "valeur": "Paris",
-                        "operateur": "OU"
-                    },
-                    {
-                        "typeRecherche": "TOUS_LES_MOTS_DANS_UN_CHAMP",
-                        "valeur": "accès",
-                        "operateur": "ET"
-                    }
-                ],
-                "operateur": "OU"
-            }
-        ],
-        "pageNumber": 1,
-        "pageSize": 15,
-        "sort": "PERTINENCE"
-    },
-    "fond": "ALL"
-}))
+    print("Test de l'API Legifrance")
+    print("====================================")
+
+    print(api_call({
+        "recherche": {
+            "champs": [
+                {
+                    "typeChamp": "TITLE",
+                    "criteres": [
+                        {
+                            "typeRecherche": "TOUS_LES_MOTS_DANS_UN_CHAMP",
+                            "valeur": "Paris",
+                            "operateur": "OU"
+                        },
+                        {
+                            "typeRecherche": "TOUS_LES_MOTS_DANS_UN_CHAMP",
+                            "valeur": "accès",
+                            "operateur": "ET"
+                        }
+                    ],
+                    "operateur": "OU"
+                }
+            ],
+            "pageNumber": 1,
+            "pageSize": 15,
+            "sort": "PERTINENCE"
+        },
+        "fond": "ALL"
+    }))

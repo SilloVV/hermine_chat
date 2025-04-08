@@ -1,5 +1,5 @@
 
-base_path="agent_legifrance/prompting/"
+base_path="agent_payload_legifrance/prompting/"
 
 # charger le fichier format.txt 
 format=""

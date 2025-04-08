@@ -1,0 +1,52 @@
+
+base_path="agent_legifrance/prompting/"
+
+# charger le fichier format.txt 
+format=""
+with open(base_path + "format.txt", "r", encoding="utf-8") as f:
+    format = f.read()
+#print(format)
+
+# charger le fichier type_champs.txt 
+champs = ""
+with open(base_path + "type_champs.txt", "r", encoding="utf-8") as f:
+    champs = f.read()
+#print(champs)
+
+# charger le fichier operateurs.txt 
+operateurs = ""
+with open(base_path + "operateurs.txt", "r", encoding="utf-8") as f:
+    operateurs = f.read()
+#print(operateurs)
+
+# charger le fichier fonds.txt 
+fonds=""
+with open(base_path + "fonds.txt", "r", encoding="utf-8") as f:
+    fonds = f.read()
+#print(fonds)
+
+# charger le fichier type_de_recherche.txt
+type_recherche=""
+with open(base_path + "type_de_recherche.txt", "r", encoding="utf-8") as f:
+    type_recherche = f.read()
+#print(type_recherche)
+
+system_prompt="""
+Analyse juridique réfléchie
+La seule réponse que tu dois fournir est un payload JSON.
+Tu es un expert juridique. Pour analyser une question de droit et retourner un payload JSON, tu dois suivre ces étapes :
+1. Identifier les champs pertinents pour la recherche dans l'API Legifrance.
+2. Déterminer le fond juridique appropriés parmi les suivants : {fonds}
+3. pour chaque champ parmi les suivants : {champs}, choisir les opérateurs logiques adéquats pour combiner les critères.
+3. Choisir les opérateurs logiques adéquats pour combiner les critères parmi les suivants : {operateurs}
+4. Choisir le type de recherche parmi les suivants : {type_recherche}
+4. Formuler le payload JSON en respectant la structure suivante :{format}
+
+# Réponse : 
+Respecte strictement le format JSON, sans explications supplémentaires.
+C'est la seule réponse que tu dois fournir.
+
+""".format(fonds=fonds, champs=champs, operateurs=operateurs, format=format, type_recherche=type_recherche)
+
+#print(system_prompt)
+

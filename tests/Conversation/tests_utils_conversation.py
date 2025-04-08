@@ -1,7 +1,8 @@
 import pytest 
 from unittest.mock import patch, MagicMock
 
-# à appeler avec 'python -m tests.LLM.tests_init_llm_and_env_variable_loader'
+
+# à appeler avec 'python -m tests.Conversation.tests_utils_conversation '
 
 # fichier à tester
 from Conversation.utils_conversation import ( 

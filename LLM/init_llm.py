@@ -9,7 +9,7 @@ from langchain_mistralai import ChatMistralAI
 
 
 #Variables utiles
-API_KEY_NAME=load_var_env("API_KEY_NAME")
+MODEL_API_KEY_NAME=load_var_env("MODEL_API_KEY_NAME")
 MODEL_NAME= load_var_env("MODEL_NAME") 
 
 def try_api_key(API_KEY: str) -> bool: ## <--- à voir si c'est vraiment utile : augmente le request rate initialement RPS -> https://docs.mistral.ai/deployment/laplateforme/tier/
@@ -41,8 +41,8 @@ def initialize_llm(model: str, max_output_tokens: int, temperature: float = 0.1)
 	pour vérifier si la clé API est valide.
     """
     
-    if not try_api_key(load_var_env(API_KEY_NAME)):
-        raise ValueError(f"API key {API_KEY_NAME} is not valid.")
+    if not try_api_key(load_var_env(MODEL_API_KEY_NAME)):
+        raise ValueError(f"API key {MODEL_API_KEY_NAME} is not valid.")
     
     # La doc ChatMistralAI est dispo ici : https://docs.mistral.ai/api/#tag/chat/operation/chat_completion_v1_chat_completions_post
     llm = ChatMistralAI(
@@ -53,23 +53,4 @@ def initialize_llm(model: str, max_output_tokens: int, temperature: float = 0.1)
     return llm
 
 
-def stream_chat_response(llm, messages):
-    """Générateur qui produit les morceaux de réponse un par un."""
-    try:
-        for chunk in llm.stream(messages):
-            yield chunk.content
-    except Exception as e:
-        yield f"[Erreur de communication: {e}]"
 
-# Utilisation dans une interface de chat
-def display_streaming_response(llm, messages):
-    print("\nAssistant: ", end="", flush=True)
-    full_response = ""
-    
-    for text_chunk in stream_chat_response(llm, messages):
-        print(text_chunk, end="", flush=True)
-        full_response += text_chunk
-        time.sleep(0.01)  # Optionnel: simule un délai de frappe naturel
-    
-    print("\n")
-    return full_response 

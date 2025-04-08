@@ -21,21 +21,27 @@ Demande d'analyse juridique formelle
 Je souhaite une réponse strictement juridique qui:
 
 Reformule ma question en utilisant exclusivement le vocabulaire juridique approprié (par exemple: "enfant" → "mineur")
-Ne contient aucune explication supplémentaire, contexte historique ou conseils pratiques
 Se limite aux sources juridiques françaises en vigueur
 
-Identifie uniquement les fondements juridiques pertinents (codes, lois, jurisprudence) concernant [SUJET JURIDIQUE] parmi :
-- [{codes}, {jurisprudences},accords d'entreprise]
-
+Identifie uniquement les fondements juridiques pertinents (codes, lois, jurisprudence) concernant [SUJET JURIDIQUE] via une recherche sur Brave Search sur les UNIQUEMENT sites de legifrance.gouv ou doctrine.fr  parmi :
+- [{codes}, {jurisprudences},accords d'entreprise] 
+Répond ensuite à la question de la façon la plus complète possible en utilisant les sources juridiques trouvées.
 Merci de respecter rigoureusement ce format:
 Reformulation de la question: [REFORMULATION]
 Fondements juridiques: [CODE, LOI, JURISPRUDENCE, ACCORD]
 Source juridique :[Article, alinéa, décision de justice, etc.]
+Sources internet : [sources complète]
+Réponse : [réponse complète]
 
+###########################################
 Exemple de question: "Est-ce qu'un enfant peut être commerçant ?" 
 Exemple de réponse:
 Reformulation de la question: "Un mineur peut-il exercer une activité commerciale ?"
 Fondements juridiques: [Code de commerce, code civil]
-Source 
-"""
+Source juridique :[Article L121-2]
+Sources internet =[https://www.legifrance.gouv.fr/codes/section_lc/LEGITEXT000005634379]
+Réponse : 
+
+""".format(codes=codes, jurisprudences=jurisprudences)
+
 

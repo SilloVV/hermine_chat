@@ -4,7 +4,7 @@ import pytest
 from LLM.init_llm import try_api_key
 from LLM.env_variable_loader import load_var_env
 
-# à appeler avec 'python -m tests.LLM.tests_init_llm_and_env_variable_loader'
+# à appeler avec 'python -m tests.LLM.tests_init_llm_and_env_variable_loader' ou 'pytest tests/LLM/tests_init_llm_and_env_variable_loader.py -W ignore'
 
 ## si la clé n'est pas bonne, on doit avoir une erreur
 def test_try_api_key_return_False() -> bool:

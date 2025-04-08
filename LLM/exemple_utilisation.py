@@ -23,6 +23,8 @@ print(ai_msg)
 # l'affichage se fait en dynamique , plus intéressant pour attendre la réponse coté utilisatueur 
 for chunk in llm.stream(messages):
     print(chunk.content, end="", flush=True)
+
+# en asynchrone 
     
 # Cas utiles 
 ## 1. recupérer uniquement la réponse du llm

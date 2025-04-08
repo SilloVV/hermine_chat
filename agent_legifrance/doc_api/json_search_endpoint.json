@@ -1,0 +1,111 @@
+{
+    "swagger": "2.0",
+    "info": {
+      "description": "Afin de faciliter la réutilisation des données juridiques, la DILA met à disposition du public une API de Légifrance.\nCe document a pour objectif de décrire les méthodes de l'API Légifrance, présentées à l'aide du framework Swagger.\nVous pouvez également télécharger une [documentation complémentaire](https://www.legifrance.gouv.fr/contenu/Media/Files/pied-de-page/description-des-tris-et-filtres-de-l-api.xlsx) ainsi que des [exemples d’utilisation](https://www.legifrance.gouv.fr/contenu/Media/Files/pied-de-page/exemples-d-utilisation-de-l-api.docx) de l'API.\n\nCet accès vous permet d’expérimenter l'API sur un environnement de test et de vous familiariser avec les différentes méthodes.\n\nÀ noter :\n- L'environnement de test peut être indisponible.\n- Les appels sont limités par quotas.\n\nLes mises à jour correctives et évolutives sont réalisées dans un premier temps sur cet environnement.\nL'API mise à disposition correspond à celle utilisée par le site de Légifrance.\n\nLes données ne sont pas identiques à celles de Production.\n\nL'API Légifrance est mise à disposition sous [conditions](https://www.legifrance.gouv.fr/contenu/pied-de-page/open-data-et-api).\n\nPour toute question, vous pouvez écrire à l'adresse retours-legifrance-modernise@dila.gouv.fr.",
+      "version": "2.4.2",
+      "title": "Légifrance",
+      "contact": {
+        "name": "DILA",
+        "url": "https://www.dila.premier-ministre.gouv.fr",
+        "email": "retours-legifrance-modernise@dila.gouv.fr"
+      },
+      "license": {
+        "name": "Licence ouverte v2.0",
+        "url": "https://www.etalab.gouv.fr/wp-content/uploads/2017/04/ETALAB-Licence-Ouverte-v2.0.pdf"
+      }
+    },
+    "host": "sandbox-api.piste.gouv.fr",
+    "basePath": "/dila/legifrance/lf-engine-app",
+    "tags": [
+      {
+        "name": "Search Controller",
+        "description": "Recherche sur les textes"
+      }
+    ],
+    "schemes": ["https", "http"],
+    "security": [
+      {
+        "SecurityProfile.OAuthImplicit": ["openid"]
+      },
+      {
+        "SecurityProfile.OAuthAccessCode": ["openid"]
+      }
+    ],
+    "paths": {
+      "/search": {
+        "post": {
+          "tags": ["Search Controller"],
+          "summary": "Recherche générique des documents indexés",
+          "description": "Permet de faire une recherche de documents. On peut préciser le fond, les filtres textuels, les facettes et la pagination",
+          "operationId": "searchUsingPOST",
+          "consumes": ["application/json"],
+          "produces": ["application/json"],
+          "parameters": [
+            {
+              "in": "body",
+              "name": "jsonRequest",
+              "description": "Requête de recherche porteur du/des fonds ciblés, des filtres et des informations de pagination",
+              "required": false,
+              "schema": {
+                "$ref": "#/definitions/SearchRequestDTO"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK",
+              "schema": {
+                "$ref": "#/definitions/SearchResponseDTO"
+              }
+            },
+            "201": {
+              "description": "Created"
+            },
+            "401": {
+              "description": "Unauthorized"
+            },
+            "403": {
+              "description": "Forbidden"
+            },
+            "404": {
+              "description": "Not Found"
+            }
+          }
+        }
+      }
+    },
+    "definitions": {
+      "SearchRequestDTO": {
+        "type": "object",
+        "required": ["fond", "recherche"],
+        "properties": {
+          "recherche": {
+            "description": "Objet définissant la recherche",
+            "$ref": "#/definitions/RechercheSpecifiqueDTO"
+          },
+          "fond": {
+            "type": "string",
+            "example": "LODA_DATE",
+            "description": "Fonds sur lequel appliquer la recherche. Pour rechercher dans tous les fonds, il faut définir la valeur ALL. Pour les fonds LODA et CODE il existe deux types de recherche : la recherche par date (_DATE) de version ou la recherche par état juridique (_ETAT)",
+            "enum": [
+              "JORF",
+              "CNIL",
+              "CETAT",
+              "JURI",
+              "JUFI",
+              "CONSTIT",
+              "KALI",
+              "CODE_DATE",
+              "CODE_ETAT",
+              "LODA_DATE",
+              "LODA_ETAT",
+              "ALL",
+              "CIRC",
+              "ACCO"
+            ]
+          }
+        }
+      }
+    }
+  }
+  
